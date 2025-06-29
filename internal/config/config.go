@@ -13,8 +13,8 @@ var (
 )
 
 type Config struct {
-	port string
-	db   string
+	Port string
+	DSN  string
 }
 
 func Init() {
@@ -27,6 +27,9 @@ func Init() {
 
 	// app
 	port := getEnv("PORT", "8080")
+
+	// db
+	dbPort := getEnv("DB_PORT", "3306")
 	user := getEnv("DB_USER_NAME", "moneyman")
 	pass := getEnv("DB_PASS", "password")
 	host := getEnv("HOST", "localhost")
@@ -34,13 +37,13 @@ func Init() {
 
 	// data source name
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true&loc=Local",
-		user, pass, host, port, dbname,
+		user, pass, host, dbPort, dbname,
 	)
 
 	// global config
 	C = Config{
-		port: port,
-		db:   dsn,
+		Port: port,
+		DSN:  dsn,
 	}
 }
 
