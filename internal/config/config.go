@@ -13,8 +13,10 @@ var (
 )
 
 type Config struct {
-	Port string
-	DSN  string
+	Port     string
+	DSN      string
+	BotToken string
+	Debug    bool
 }
 
 func Init() {
@@ -40,10 +42,19 @@ func Init() {
 		user, pass, host, dbPort, dbname,
 	)
 
+	// telegram
+	botToken := getEnv("TG_BOT_TOKEN", "")
+
 	// global config
 	C = Config{
-		Port: port,
-		DSN:  dsn,
+		Port:     port,
+		DSN:      dsn,
+		BotToken: botToken,
+		Debug:    false,
+	}
+
+	if logLevel == "debug" {
+		C.Debug = true
 	}
 }
 
